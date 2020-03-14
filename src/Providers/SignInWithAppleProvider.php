@@ -104,11 +104,11 @@ class SignInWithAppleProvider extends AbstractProvider implements ProviderInterf
 
             if (array_key_exists("name", $userRequest)) {
                 $user["name"] = $userRequest["name"];
-                $fullName = trim(
-                    ($user["name"]['firstName'] ?? "")
-                    . " "
-                    . ($user["name"]['lastName'] ?? "")
-                );
+                // $fullName = trim(
+                //     ($user["name"]['firstName'] ?? "")
+                //     . " "
+                //     . ($user["name"]['lastName'] ?? "")
+                // );
             }
         }
 
@@ -116,7 +116,8 @@ class SignInWithAppleProvider extends AbstractProvider implements ProviderInterf
             ->setRaw($user)
             ->map([
                 "id" => $user["sub"],
-                "name" => $fullName ?? null,
+                "first_name" => $user["name"]['firstName'] ?? null,
+                "last_name" => $user["name"]['lastName'] ?? null,
                 "email" => $user["email"] ?? null,
             ]);
     }
